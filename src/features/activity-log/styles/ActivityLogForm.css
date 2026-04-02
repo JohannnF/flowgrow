@@ -1,0 +1,145 @@
+.activity-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 28px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.activity-form__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.activity-form__divider {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+}
+
+.activity-form__row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+.activity-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.activity-form__group--half {
+  flex: 1;
+}
+
+.activity-form__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+  display: block;
+  letter-spacing: 0.3px;
+}
+
+.activity-form__input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.activity-form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.activity-form__input:hover {
+  border-color: #000000;
+}
+
+.activity-form__input:focus {
+  border-color: #999;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+}
+
+.activity-form__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-form__button {
+  flex: 1;
+  min-height: 40px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.activity-form__button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.12);
+}
+
+.activity-form__button--secondary {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.activity-form__button--secondary:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.activity-form__button--primary {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  background-color: #111827;
+  border-color: #111827;
+}
+
+.activity-form__button--primary:hover:not(:disabled) {
+  background-color: #1f2937;
+  border-color: #1f2937;
+}
+
+.activity-form__button--primary:hover:not(:disabled) {
+  background-color: #555;
+  border-color: #555;
+}
+
+.activity-form__button--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .activity-form {
+    padding: 20px;
+  }
+
+  .activity-form__row {
+    flex-direction: column;
+  }
+}

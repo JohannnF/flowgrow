@@ -1,5 +1,7 @@
-import { ActivityPage } from "./features/activity/ActivityPage";
+import ActivityLogPage from "./features/activity-log/ActivityLogPage";
 
-export default function App() {
-  return <ActivityPage />;
+function App() {
+  return <ActivityLogPage />;
 }
+
+export default App;

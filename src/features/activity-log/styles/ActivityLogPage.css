@@ -1,0 +1,29 @@
+.activity-log-page__header {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.activity-log-page {
+  max-width: 1100px;
+  margin: 32px auto 48px;
+  padding: 0 24px;
+}
+
+.activity-log-page__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.activity-log-page__subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.activity-log {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}

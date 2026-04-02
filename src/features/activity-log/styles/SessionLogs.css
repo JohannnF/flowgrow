@@ -1,0 +1,174 @@
+.session-logs {
+  max-width: 1100px;
+  margin: 32px auto 48px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.session-logs__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e5e7eb;
+  text-align: left;
+}
+
+.session-logs__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.session-logs__table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  color: #374151;
+}
+
+.session-logs__table thead {
+  background: #f9fafb;
+}
+
+.session-logs__table th {
+  padding: 14px 16px;
+  text-align: center;
+  font-weight: 600;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.session-logs__table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.session-logs__table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.session-logs__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.session-logs__empty {
+  text-align: center;
+  padding: 28px;
+  color: #9ca3af;
+}
+
+.session-logs__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.session-logs__button {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  transition: 0.2s ease;
+  background: #ffffff;
+  color: #374151;
+}
+
+/* default / neutral */
+.session-logs__button--secondary:hover {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+/* danger but subtle */
+.session-logs__button--danger {
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+.session-logs__button--danger:hover {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+}
+
+.session-status {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #374151;
+}
+
+/* subtle variations */
+.session-status--completed {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.session-status--pending {
+  background: #fafafa;
+  color: #6b7280;
+}
+
+.session-status--missed {
+  background: #f5f5f5;
+  color: #9ca3af;
+}
+
+@media (max-width: 768px) {
+  .session-logs {
+    padding: 0 14px;
+  }
+
+  .session-logs__title {
+    font-size: 1.15rem;
+  }
+
+  .session-logs__table th,
+  .session-logs__table td {
+    padding: 12px 10px;
+    font-size: 0.85rem;
+  }
+
+  .session-logs__button {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+}
+
+.session-logs__table td:nth-child(4) {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.session-logs__table td:nth-child(9) {
+  white-space: nowrap;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.session-logs__table td:last-child,
+.session-logs__table th:last-child {
+  position: sticky;
+  right: 0;
+  background: white;
+}
