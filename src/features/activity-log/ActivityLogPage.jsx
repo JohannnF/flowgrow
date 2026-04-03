@@ -1,17 +1,131 @@
 import { useEffect, useState } from "react";
-import { mockLogs } from "./data/mockLogs";
 import "./styles/ActivityLogPage.css";
 import "./styles/ActivityLogForm.css";
 import "./styles/Session.css";
 import "./styles/SessionLogs.css";
 
 export default function ActivityLogPage() {
-  const [logs, setLogs] = useState(mockLogs);
-
+  const [logs, setLogs] = useState([]);
+  const [form, setForm] = useState({
+    title: "",
+    date: new Date().toISOString().split("T")[0],
+    category: "",
+    note: "",
+  });
+  const [session, setSession] = useState({
+    title: "",
+    date: "",
+    category: "",
+    note: "",
+    startTime: "",
+    endTime: "",
+    duration: "",
+    startMs: null,
+    status: "Idle",
+    isRunning: false,
+  });
   useEffect(() => {
     document.title = "Activity Log";
   }, []);
 
+  function formatDuration(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  }
+
+  function pad(num) {
+    return num.toString().padStart(2, "0");
+  }
+
+  function handleStart() {
+    const now = new Date();
+
+    const startedSession = {
+      title: form.title,
+      date: form.date,
+      category: form.category,
+      note: form.note,
+      startTime: now.toLocaleTimeString(),
+      endTime: "",
+      duration: "",
+      startMs: now.getTime(),
+      status: "Running",
+      isRunning: true,
+    };
+
+    console.log("Started session:", startedSession);
+    setSession(startedSession);
+  }
+
+  function handleEnd() {
+    const now = new Date();
+    const endTimeValue = now.toLocaleTimeString();
+    const endMilliseconds = now.getTime();
+
+    let finalDuration = "";
+
+    if (session.startMs) {
+      const diff = endMilliseconds - session.startMs;
+      finalDuration = formatDuration(diff);
+    }
+
+    const completedSession = {
+      ...session,
+      id: session.id || crypto.randomUUID(),
+      title: form.title,
+      date: form.date,
+      category: form.category,
+      notes: form.note,
+      endTime: endTimeValue,
+      duration: finalDuration,
+      status: "Completed",
+      isRunning: false,
+      createdAt: session.createdAt || now.toISOString(),
+      completedAt: now.toISOString(),
+    };
+
+    console.log("Completed session:", completedSession);
+
+    setSession(completedSession);
+    setLogs((prevLogs) => [completedSession, ...prevLogs]);
+  }
+
+  function handleClearEntry() {
+    setForm({
+      title: "",
+      date: new Date().toISOString().split("T")[0],
+      category: "",
+      note: "",
+    });
+
+    setSession({
+      id: "",
+      title: "",
+      date: "",
+      category: "",
+      note: "",
+      startTime: "",
+      endTime: "",
+      duration: "",
+      startMs: null,
+      status: "Idle",
+      isRunning: false,
+      createdAt: "",
+    });
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
   return (
     <>
       <main className="activity-log-page">
@@ -31,8 +145,9 @@ export default function ActivityLogPage() {
                 <label className="activity-form__label">Title</label>
                 <input
                   type="text"
-                  // value={title}
-                  // onChange={(e) => setTitle(e.target.value)}
+                  name="title"
+                  value={form.title}
+                  onChange={handleChange}
                   className="activity-form__input"
                   placeholder="What are you focusing on?"
                 />
@@ -44,9 +159,10 @@ export default function ActivityLogPage() {
                   <input
                     type="date"
                     className="activity-form__input"
-                    // value={date}
-                    // onChange={(e) => setDate(e.target.value)}
-                    // disabled={editingLog} className="activity-form__input" />
+                    name="date"
+                    value={form.date}
+                    onChange={handleChange}
+                    disabled={true}
                   />
                 </div>
 
@@ -54,8 +170,9 @@ export default function ActivityLogPage() {
                   <label className="activity-form__label">Category</label>
                   <select
                     className="activity-form__input"
-                    // value={category}
-                    // onChange={(e) => setCategory(e.target.value)}
+                    name="category"
+                    value={form.category}
+                    onChange={handleChange}
                   >
                     <option value="">Select Category</option>
                     <option value="Coding">Coding</option>
@@ -71,8 +188,9 @@ export default function ActivityLogPage() {
                 <textarea
                   className="activity-form__input activity-form__textarea"
                   placeholder="Write what you did or what you have learned..."
-                  // value={note}
-                  // onChange={(e) => setNote(e.target.value)}
+                  name="note"
+                  value={form.note}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -81,8 +199,10 @@ export default function ActivityLogPage() {
                   <button
                     type="button"
                     className="activity-form__button activity-form__button--secondary"
-                    // onClick={handleStart}
-                    // disabled={isRunning}
+                    onClick={handleStart}
+                    disabled={
+                      session.isRunning || session.status === "Completed"
+                    }
                   >
                     Start Session
                   </button>
@@ -90,8 +210,8 @@ export default function ActivityLogPage() {
                   <button
                     type="button"
                     className="activity-form__button activity-form__button--secondary"
-                    // onClick={handleEnd}
-                    // disabled={!isRunning}
+                    onClick={handleEnd}
+                    disabled={!session.isRunning}
                   >
                     End Session
                   </button>
@@ -100,10 +220,10 @@ export default function ActivityLogPage() {
                 <button
                   type="button"
                   className="activity-form__button activity-form__button--primary"
-                  // onClick={handleNewEntry}
-                  // disabled={isRunning}
+                  onClick={handleClearEntry}
+                  disabled={session.status === "Idle"}
                 >
-                  New Entry
+                  {session.status === "Running" ? "Cancel" : "Clear Entry"}
                 </button>
               </div>
             </form>
@@ -113,7 +233,7 @@ export default function ActivityLogPage() {
             <div className="session__header">
               <h2 className="session__title">Session</h2>
               <div className="session__status session__status--idle">
-                Not Running
+                {session.status || "Not Running"}
               </div>
             </div>
 
@@ -123,28 +243,28 @@ export default function ActivityLogPage() {
               <div className="session__summary-row">
                 <span className="session__label">Title</span>
                 <span className="session__value session__value--empty">
-                  Not set
+                  {session.title || "Not set"}
                 </span>
               </div>
 
               <div className="session__summary-row">
                 <span className="session__label">Date</span>
                 <span className="session__value session__value--empty">
-                  Not set
+                  {session.date || "Not set"}
                 </span>
               </div>
 
               <div className="session__summary-row">
                 <span className="session__label">Category</span>
                 <span className="session__value session__value--empty">
-                  Not set
+                  {session.category || "Not set"}
                 </span>
               </div>
 
               <div className="session__summary-row session__summary-row--notes">
                 <span className="session__label">Notes</span>
                 <p className="session__notes session__notes--empty">
-                  No notes yet
+                  {session.notes || "Not notes yet"}
                 </p>
               </div>
             </div>
@@ -153,17 +273,23 @@ export default function ActivityLogPage() {
 
             <div className="session__row">
               <span className="session__label">Start Time</span>
-              <span className="session__value">--:--</span>
+              <span className="session__value">
+                {session.startTime || "--:--"}
+              </span>
             </div>
 
             <div className="session__row">
               <span className="session__label">End Time</span>
-              <span className="session__value">--:--</span>
+              <span className="session__value">
+                {session.endTime || "--:--"}
+              </span>
             </div>
 
             <div className="session__row">
               <span className="session__label">Duration</span>
-              <span className="session__value">00:00:00</span>
+              <span className="session__value">
+                {session.duration || "00:00:00"}
+              </span>
             </div>
           </div>
         </div>
