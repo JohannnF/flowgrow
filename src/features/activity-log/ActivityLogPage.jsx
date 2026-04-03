@@ -79,7 +79,7 @@ export default function ActivityLogPage() {
       title: form.title,
       date: form.date,
       category: form.category,
-      notes: form.note,
+      note: form.note,
       endTime: endTimeValue,
       duration: finalDuration,
       status: "Completed",
@@ -150,6 +150,7 @@ export default function ActivityLogPage() {
                   onChange={handleChange}
                   className="activity-form__input"
                   placeholder="What are you focusing on?"
+                  disabled={session.status === "Completed"}
                 />
               </div>
 
@@ -173,6 +174,7 @@ export default function ActivityLogPage() {
                     name="category"
                     value={form.category}
                     onChange={handleChange}
+                    disabled={session.status === "Completed"}
                   >
                     <option value="">Select Category</option>
                     <option value="Coding">Coding</option>
@@ -191,6 +193,7 @@ export default function ActivityLogPage() {
                   name="note"
                   value={form.note}
                   onChange={handleChange}
+                  disabled={session.status === "Completed"}
                 />
               </div>
 
@@ -264,7 +267,7 @@ export default function ActivityLogPage() {
               <div className="session__summary-row session__summary-row--notes">
                 <span className="session__label">Notes</span>
                 <p className="session__notes session__notes--empty">
-                  {session.notes || "Not notes yet"}
+                  {session.note || "No notes yet"}
                 </p>
               </div>
             </div>
@@ -328,11 +331,7 @@ export default function ActivityLogPage() {
                       <td>{log.title}</td>
                       <td>{log.date}</td>
                       <td>{log.category}</td>
-                      <td>
-                        {log.notes.length > 30
-                          ? `${log.notes.slice(0, 30)}...`
-                          : log.notes}
-                      </td>
+                      <td className="session-logs__notes">{log.notes}</td>
                       <td>{log.startTime}</td>
                       <td>{log.endTime}</td>
                       <td>{log.duration}</td>

@@ -66,6 +66,10 @@
   color: #9ca3af;
 }
 
+.session-logs__notes {
+  max-width: 220px;
+  white-space: pre-wrap;
+}
 .session-logs__actions {
   display: flex;
   gap: 8px;
@@ -84,14 +88,12 @@
   color: #374151;
 }
 
-/* default / neutral */
 .session-logs__button--secondary:hover {
   background: #111827;
   color: #ffffff;
   border-color: #111827;
 }
 
-/* danger but subtle */
 .session-logs__button--danger {
   color: #6b7280;
   border-color: #d1d5db;
@@ -153,13 +155,6 @@
   }
 }
 
-.session-logs__table td:nth-child(4) {
-  max-width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .session-logs__table td:nth-child(9) {
   white-space: nowrap;
   font-size: 0.82rem;
@@ -171,4 +166,5 @@
   position: sticky;
   right: 0;
   background: white;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.04);
 }
